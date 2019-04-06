@@ -10,11 +10,11 @@ from scipy import stats as st
 
 #Establish connection with Teradata 
 cnx_tera = ('DRIVER={<Driver Name>};'
- 							'DBCNAME=<DBCNAME>;'
- 							'DATABASE=<DATABASE NAME>;'
- 							'AUTHENTICATION=LDAP;'
- 							'UID=<Username>;' #Enter your username and password
- 							'PWD=<Password>')
+ 	    'DBCNAME=<DBCNAME>;'
+	    'DATABASE=<DATABASE NAME>;'
+	    'AUTHENTICATION=LDAP;'
+	    'UID=<Username>;'
+	    'PWD=<Password>')
 
 #Write the SQL query and import data into a dataframe
 sql = textwrap.dedent("""select * from tablename""")
@@ -79,16 +79,16 @@ test_summary2['pct_lft'] = (test_summary2['TestB']/test_summary2['TestA'])-1
 for i in test_summary2.index:
     #Comparing means
     cm = sms.CompareMeans(sms.DescrStatsW(test_data_A_clean[i][test_data_A_clean[i].notnull()]),
-							sms.DescrStatsW(test_data_B_clean[i][test_data_B_clean[i].notnull()]))
+			sms.DescrStatsW(test_data_B_clean[i][test_data_B_clean[i].notnull()]))
     #Extracting left boundary and right boundary
     lb,rb = cm.tconfint_diff(usevar='unequal',alternative='two-sided',alpha = 0.10)
     
-		#Convert the lb and rb to lb lift and rb lift         
+    #Convert the lb and rb to lb lift and rb lift         
     test_summary2.at[i,'conf_int_lb'] = (rb*-1)/test_data_A_clean[i].mean()
     test_summary2.at[i,'conf_int_rb']=  (lb*-1)/test_data_A_clean[i].mean()
     
-		#p-value
+    #p-value
     t_stat,test_summary2.at[i,'p-value'] = st.ttest_ind(test_data_A_clean[i][test_data_A_clean[i].notnull()],
-               																					test_data_B_clean[i][test_data_B_clean[i].notnull()],
-               																					equal_var = False)
+               				test_data_B_clean[i][test_data_B_clean[i].notnull()],equal_var = False)
+
 print(test_summary2)
