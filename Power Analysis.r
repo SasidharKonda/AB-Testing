@@ -30,7 +30,7 @@ Avg_upo_trt = (0.005+1)*Avg_upo_ctrl   #0.5% Change you want to see in treatment
 Std_Dev_units = sd(df$units)           #Standard Deviation in units
 
 # Power Analysis
-power.t.test(delta = abs(Avg_upo_ctrl - Avg_upo_trt)/Std_Dev_units ,sd = Std_Dev_units,
+power.t.test(delta = abs(Avg_upo_ctrl - Avg_upo_trt) ,sd = Std_Dev_units,
             sig.level = 0.05,power = 0.80,alternative = 'two.sided')   
 
 /*
